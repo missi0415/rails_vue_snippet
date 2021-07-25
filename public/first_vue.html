@@ -1,15 +1,32 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
 
-  <title>Snippet App</title>
-</head>
-<body>
+    <title>Snippet App</title>
+  </head>
+  <body>
+    <div id="app">
+      <p>{{ message }}</p>
+      <!-- ここから追記する -->
+      <p>{{ message2 }}</p>
+      <!-- ここまで追記する -->
+    </div>
+    <script>
 
-  <div id="app"> <!-- 説明 2.1 -->
-    <p>{{ message }}</p> <!-- 説明 2.2 -->
-  </div>
-</body>
+      new Vue({
+        el: '#app',
+        data () {
+          return {
+            message: 'Hello Vue!',
+            // ここから追記する
+            message2: 'Hoge'
+            // ここまで追記する
+          }
+        }
+      })
+
+    </script>
+  </body>
 </html>
