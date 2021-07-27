@@ -88,7 +88,11 @@ Rails.application.configure do
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
+  # 追加-------------------
+  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
+  config.action_controller.allow_forgery_protection = false
+  # -------------------
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 end
