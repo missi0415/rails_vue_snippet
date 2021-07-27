@@ -12,7 +12,8 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <!-- ビューティファイのjsのよみこみ -->
     <script src="https://cdn.jsdelivr.net/npm/vuetify@1.5/dist/vuetify.js"></script>
-
+    <!-- showdown のライブラリを利用 -->
+    <script src="https://cdn.rawgit.com/showdownjs/showdown/1.9.0/dist/showdown.min.js"></script>
     <title>Snippet App</title>
   </head>
   <body>
@@ -35,11 +36,15 @@
               </ul>
             </div>
           </v-flex>
-          <v-flex xs7>
+          <v-flex xs7 style="margin:10ox;">
+            <h2>Search Snippet</h2>
+            <v-text-field v-model="searchWord" v-on:keyup="abstruct" label="Input Keyword" style='margin-top:4px'></v-text-field>
             <v-card style="margin-top:10px" v-for="snippet in snippetList">
+              <a v-bind:id='snippet.id'></a>
               <v-card-title primary-title>
-                <a v-bind:id='snippet.id'></a>
-                <h3 class="headline">{{ snippet.title }}</h3>
+                <div style="background-color:#bffae7">
+                  <h3 class="headline">[{{ snippet.language }}] {{ snippet.title }}</h3>
+                </div>
               </v-card-title>
             <div style="margin: 10px 20px;">
               <textarea style='width:100%; height:300px; background-color:#efefef; padding:3px'>  {{ snippet.contents }} </textarea>
@@ -160,10 +165,13 @@
             putLanguage: '',
             putContents: '',
             dialogDeleteFlag: false,
+            searchWord: '',
           }
         },
-        mounted () {
+        mounted: function() {
           this.listSnippet();
+          options = { headerLevelStart: 3, omitExtraWLInCodeBlocks: true, tables: true, simpleLineBreaks: true, simplifiedAutoLink: true }
+        this.showdown = new showdown.Converter(options)   
         },
         methods: {
           listSnippet: function() { 
@@ -238,19 +246,27 @@
           goTop: function(){
             document.getElementById("app").scrollIntoView(true)
           },
-          abstruct: function(){
+          abstruct: function() {
             if (this.language == 'ALL') {
               this.snippetList = []
-              for(i=0; i<this.allData.length; i++){
-                this.snippetList.push(this.allData[i])
-              }
-            }else if (this.language !=""){
-              this.snippetList = []
-              for (i=0; i<this.allData.length; i++){
-                if (this.allData[i].language == this.language){
+              for (i=0;i<this.allData.length;i++) {
+                // ここから編集する
+                if ((this.allData[i].contents.indexOf(this.searchWord) !== -1) || (this.allData[i].title.indexOf(this.searchWord) !== -1) || (this.allData[i].language.indexOf(this.searchWord) !== -1)) { // 説明 4.7
                   this.snippetList.push(this.allData[i])
                 }
-              }
+                // ここまで編集する
+              }   
+            } else if (this.language != '') {
+              this.snippetList = []
+              for (i=0;i<this.allData.length;i++) {
+                if (this.allData[i].language == this.language) {
+                  // ここから編集する
+                  if ((this.allData[i].contents.indexOf(this.searchWord) !== -1) || (this.allData[i].title.indexOf(this.searchWord) !== -1) || (this.allData[i].language.indexOf(this.searchWord) !== -1)) { // 説明 4.7
+                    this.snippetList.push(this.allData[i])
+                  }
+                  // ここまで編集する
+                }
+              }   
             }
           }
         }
