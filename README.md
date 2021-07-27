@@ -1,24 +1,20 @@
 # README
+* vuetifyの練習用に作成したアプリです
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* heroku url
+* http://snippet-app-vue.herokuapp.com/
 
-Things you may want to cover:
+* ruby '2.7.3'
 
-* Ruby version
+* rails 5.2.6
 
-* System dependencies
+* development db sqlite3
 
-* Configuration
+* production db PostgreSQL
 
-* Database creation
+* PC windows
 
-* Database initialization
+* npm@7.12.0
 
-* How to run the test suite
+* @vue/cli 4.5.13
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
